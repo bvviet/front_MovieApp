@@ -58,3 +58,4 @@ const FeatureMovies = () => {
 };
 
 export default FeatureMovies;
+
