@@ -148,7 +148,7 @@ const DetailMovie = () => {
           <div className="mt-4 flex items-center gap-5">
             <div className="flex items-center gap-2">
               <CircularProgressBar
-                percent={Math.round(movieDetail?.vote_average * 10)}
+                percent={Math.round((movieDetail?.vote_average ?? 0) * 10)}
                 size={3.5}
                 strokeWidth={0.3}
                 strokeColor={
