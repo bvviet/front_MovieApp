@@ -1,7 +1,6 @@
-import ButtonDelete from "../Favorite/ButtonDelete";
-import CircularProgressBar from "../CircularProgressBar";
 import { Link } from "react-router-dom";
-const MovieCard = ({ data, media_type, idTabs, handleDeleteSuccess }) => {
+import CircularProgressBar from "./CircularProgressBar";
+const MovieCard = ({ data, media_type }) => {
   return (
     <div className="relative rounded-lg border border-slate-800">
       {media_type === "tv" && (
@@ -9,14 +8,14 @@ const MovieCard = ({ data, media_type, idTabs, handleDeleteSuccess }) => {
           TV Show
         </p>
       )}
-      <Link to={`/detail/${media_type}/${data.id || data.movieId}`}>
+      <Link to={`/detail/${media_type}/${data?.id || data.movieId}`}>
         <img
           className="rounded-lg"
           src={`https://image.tmdb.org/t/p/original${data?.poster_path}`}
           alt={`${data.title}`}
         />
       </Link>
-      <div className="relative -top-[1.5vw] px-4">
+      <div className="relative top-[1.5vw] px-1 pb-3 sm:px-4 sm:pb-9">
         <CircularProgressBar
           percent={Math.round(data.vote_average * 10)}
           strokeColor={
@@ -32,12 +31,6 @@ const MovieCard = ({ data, media_type, idTabs, handleDeleteSuccess }) => {
           {data.release_date || data.first_air_date}
         </p>
       </div>
-      {idTabs == "favorite" && (
-        <ButtonDelete
-          idMovie={data.movieId}
-          handleDeleteSuccess={handleDeleteSuccess}
-        />
-      )}
     </div>
   );
 };

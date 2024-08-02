@@ -20,10 +20,12 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/material": "^5.16.4",
     "axios": "^1.7.2",
+    "flag-icon-css": "^4.1.7",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.1",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.25.1",
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.27.1"

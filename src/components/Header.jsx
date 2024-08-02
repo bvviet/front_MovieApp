@@ -12,7 +12,7 @@ import { Tooltip } from "react-tooltip";
 
 const Header = () => {
   return (
-    <header className="fixed left-0 right-0 top-0 z-10 flex h-14 items-center justify-between bg-slate-950 px-8 text-sm text-white sm:text-lg lg:h-20">
+    <header className="left-0 right-0 top-0 z-10 flex h-14 items-center justify-between bg-slate-950 px-8 text-sm text-white sm:text-lg lg:h-20">
       {/* Logo and Navigation */}
       <div className="flex items-center gap-1 sm:gap-8">
         <Link to={"/"}>
