@@ -16,7 +16,7 @@ const MediaList = ({ title, tabs }) => {
   setIsLoading(isLoading);
 
   return (
-    <div className="bg-black px-8 py-10 text-[1.2vw] text-white">
+    <div className="bg-black px-8 py-10 text-[1.8vw] text-white sm:text-[1.2vw]">
       <div className="mb-6 flex items-center gap-4">
         <p className="text-[2vw] font-bold">{title}</p>
         <ul className="flex rounded border border-white">
@@ -37,6 +37,7 @@ const MediaList = ({ title, tabs }) => {
             data={item}
             media_type={item.media_type || activeTabId}
             key={index}
+            isLoading={isLoading}
           />
         ))}
       </div>

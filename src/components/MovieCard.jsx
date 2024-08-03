@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import CircularProgressBar from "./CircularProgressBar";
-const MovieCard = ({ data, media_type }) => {
+import { Skeleton } from "@mui/material";
+
+const MovieCard = ({ data, media_type, isLoading }) => {
   return (
     <div className="relative rounded-lg border border-slate-800">
       {media_type === "tv" && (
@@ -9,10 +11,18 @@ const MovieCard = ({ data, media_type }) => {
         </p>
       )}
       <Link to={`/detail/${media_type}/${data?.id || data.movieId}`}>
+        {isLoading || !data?.poster_path ? (
+          <Skeleton
+            sx={{ bgcolor: "grey.900" }}
+            variant="rectangular"
+            className="h-[300px] w-[100%] sm:h-[450px]"
+          />
+        ) : null}
         <img
-          className="rounded-lg"
+          className={`rounded-lg ${isLoading ? "hidden" : "block"}`}
           src={`https://image.tmdb.org/t/p/original${data?.poster_path}`}
-          alt={`${data.title}`}
+          alt={`${data.title || data.name}`}
+          onLoad={isLoading}
         />
       </Link>
       <div className="relative top-[1.5vw] px-1 pb-3 sm:px-4 sm:pb-9">
@@ -34,4 +44,5 @@ const MovieCard = ({ data, media_type }) => {
     </div>
   );
 };
+
 export default MovieCard;

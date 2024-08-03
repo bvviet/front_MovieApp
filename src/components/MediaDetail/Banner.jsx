@@ -24,10 +24,12 @@ const Banner = ({ movieDetail, handleAddFavorite }) => {
     }));
   const groupedCrews = groupBy(crews, "job");
 
+  console.log(movieDetail?.vote_average);
+
   return (
     <div className="relative overflow-hidden text-white">
       <img
-        className="absolute inset-0 brightness-[.2] w-full"
+        className="absolute inset-0 w-full brightness-[.2]"
         src={`https://image.tmdb.org/t/p/original${movieDetail?.backdrop_path}`}
         alt={`Không có hình ảnh`}
       />
@@ -56,7 +58,7 @@ const Banner = ({ movieDetail, handleAddFavorite }) => {
           <div className="mt-2 flex items-center gap-2 sm:mt-4 sm:gap-4">
             <div className="flex items-center gap-2">
               <CircularProgressBar
-                percent={Math.round((movieDetail?.vote_average ?? 0) * 10)}
+                percent={Math.round(movieDetail?.vote_average * 10)}
                 size={3.5}
                 strokeWidth={0.3}
                 strokeColor={
@@ -70,8 +72,11 @@ const Banner = ({ movieDetail, handleAddFavorite }) => {
               Rating
             </div>
             <TrailerComponent movieId={movieDetail?.id}>
-              <button>
-                <FontAwesomeIcon icon={faPlay} className="mr-1" />
+              <button className="flex items-center">
+                <FontAwesomeIcon
+                  icon={faPlay}
+                  className="mr-1 text-[10px] sm:text-[20px]"
+                />
                 Trailer
               </button>
             </TrailerComponent>
@@ -80,9 +85,15 @@ const Banner = ({ movieDetail, handleAddFavorite }) => {
                 {moviesFavorite.some(
                   (movie) => movie.movieId == movieDetail?.id,
                 ) ? (
-                  <FontAwesomeIcon icon={faHeart} style={{ color: "red" }} />
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className="text-[10px] text-[red] sm:text-[20px]"
+                  />
                 ) : (
-                  <FontAwesomeIcon icon={faHeart} />
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className="text-[10px] sm:text-[20px]"
+                  />
                 )}
               </button>
             </div>

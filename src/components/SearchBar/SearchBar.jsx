@@ -72,7 +72,7 @@ const SearchBar = () => {
         className="relative flex h-7 w-[180px] items-center overflow-hidden rounded-full border border-gray-300 transition-all duration-300 sm:h-8 sm:w-[290px]"
       >
         <Search
-          placeholder="Search..."
+          placeholder="Tìm kiếm..."
           value={valueInput}
           onChange={(e) => setValueInput(e.target.value)}
           className="w-full border-none"
