@@ -8,7 +8,7 @@ const CircularProgressBar = ({
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percent / 100) * circumference;
   return (
-    <div>
+    <div className="absolute top-[-20px] sm:top-[-50px]">
       <svg width={`${size}vw`} height={`${size}vw`}>
         <circle
           r={`${radius}vw`}
@@ -34,11 +34,11 @@ const CircularProgressBar = ({
           x={`${size / 2}vw`}
           y={`${size / 2}vw`}
           fill="white"
-          fontSize="1.2vw"
+          fontSize="1vw"
           alignmentBaseline="middle"
           textAnchor="middle"
         >
-          {percent}
+          {percent}%
         </text>
       </svg>
     </div>

@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import Favorite from "./components/Favorite";
 import { LoadingProvider } from "./contexts/LoadingContext";
 import { FavoriteProvider } from "@contexts/FavoriteContext";
+import SearchProvide from "@contexts/SearchContext";
+import SearchResults from "@pages/SearchResults";
 
 function App() {
   return (
@@ -13,16 +15,19 @@ function App() {
       <LoadingProvider>
         <MessagesProvider>
           <FavoriteProvider>
-            <Routes>
-              <Route path="/" element={<ClientLayout />}>
-                <Route index element={<Home />} />
-                <Route path="/favorite" element={<Favorite />} />
-                <Route
-                  path="detail/:mediaType/:movieId"
-                  element={<DetailMovie />}
-                />
-              </Route>
-            </Routes>
+            <SearchProvide>
+              <Routes>
+                <Route path="/" element={<ClientLayout />}>
+                  <Route index element={<Home />} />
+                  <Route path="/favorite" element={<Favorite />} />
+                  <Route
+                    path="detail/:mediaType/:movieId"
+                    element={<DetailMovie />}
+                  />
+                  <Route path="search" element={<SearchResults />} />
+                </Route>
+              </Routes>
+            </SearchProvide>
           </FavoriteProvider>
         </MessagesProvider>
       </LoadingProvider>

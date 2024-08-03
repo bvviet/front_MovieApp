@@ -27,9 +27,9 @@ const Banner = ({ movieDetail, handleAddFavorite }) => {
   return (
     <div className="relative overflow-hidden text-white">
       <img
-        className="absolute inset-0 brightness-[.2]"
+        className="absolute inset-0 brightness-[.2] w-full"
         src={`https://image.tmdb.org/t/p/original${movieDetail?.backdrop_path}`}
-        alt={`${movieDetail?.backdrop_path}`}
+        alt={`Không có hình ảnh`}
       />
       <div className="relative mx-auto flex max-w-[1280px] gap-4 px-6 pt-10 sm:gap-6 lg:gap-8">
         <div className="flex-1">
