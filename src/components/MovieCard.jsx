@@ -1,28 +1,22 @@
 import { Link } from "react-router-dom";
 import CircularProgressBar from "./CircularProgressBar";
-import { Skeleton } from "@mui/material";
+import ImageComponent from "./ImageComponent";
 
-const MovieCard = ({ data, media_type, isLoading }) => {
+const MovieCard = ({ data, media_type }) => {
   return (
     <div className="relative rounded-lg border border-slate-800">
       {media_type === "tv" && (
-        <p className="absolute right-1 top-1 rounded bg-black p-1 text-sm font-bold text-white shadow-lg">
+        <p className="absolute right-1 top-1 rounded bg-black p-1 text-[1.2vw] font-bold text-white shadow-lg">
           TV Show
         </p>
       )}
       <Link to={`/detail/${media_type}/${data?.id || data.movieId}`}>
-        {isLoading || !data?.poster_path ? (
-          <Skeleton
-            sx={{ bgcolor: "grey.900" }}
-            variant="rectangular"
-            className="h-[300px] w-[100%] sm:h-[450px]"
-          />
-        ) : null}
-        <img
-          className={`rounded-lg ${isLoading ? "hidden" : "block"}`}
+        <ImageComponent
+          className={`w-full rounded-lg`}
           src={`https://image.tmdb.org/t/p/original${data?.poster_path}`}
           alt={`${data.title || data.name}`}
-          onLoad={isLoading}
+          width={210}
+          height={300}
         />
       </Link>
       <div className="relative top-[1.5vw] px-1 pb-3 sm:px-4 sm:pb-9">

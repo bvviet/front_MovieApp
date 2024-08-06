@@ -37,7 +37,6 @@ const MediaList = ({ title, tabs }) => {
             data={item}
             media_type={item.media_type || activeTabId}
             key={index}
-            isLoading={isLoading}
           />
         ))}
       </div>
