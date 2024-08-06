@@ -5,6 +5,7 @@ import { faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
 import TrailerComponent from "../Trailer/Trailer";
 import { FavoriteContext } from "@contexts/FavoriteContext";
 import { useContext } from "react";
+import ImageComponent from "@components/ImageComponent";
 
 const Banner = ({ movieDetail, handleAddFavorite }) => {
   const { moviesFavorite } = useContext(FavoriteContext);
@@ -28,16 +29,20 @@ const Banner = ({ movieDetail, handleAddFavorite }) => {
 
   return (
     <div className="relative overflow-hidden text-white">
-      <img
+      <ImageComponent
         className="absolute inset-0 w-full brightness-[.2]"
         src={`https://image.tmdb.org/t/p/original${movieDetail?.backdrop_path}`}
         alt={`Không có hình ảnh`}
+        width={1000}
+        height={560}
       />
       <div className="relative mx-auto flex max-w-[1280px] gap-4 px-6 pt-10 sm:gap-6 lg:gap-8">
         <div className="flex-1">
-          <img
+          <ImageComponent
             src={`https://image.tmdb.org/t/p/original${movieDetail?.poster_path}`}
             alt={`${movieDetail?.poster_path}`}
+            width={257}
+            height={363}
           />
         </div>
         <div className="flex-[2] text-[1.2vw]">

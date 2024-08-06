@@ -1,6 +1,7 @@
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TrailerComponent from "../Trailer/Trailer";
+import ImageComponent from "@components/ImageComponent";
 
 const Movie = ({ data }) => {
   if (!data) {
@@ -9,10 +10,12 @@ const Movie = ({ data }) => {
 
   return (
     <>
-      <img
+      <ImageComponent
         src={`https://image.tmdb.org/t/p/original${data?.backdrop_path}`}
         alt=""
         className="aspect-video w-full brightness-50"
+        width={1000}
+        height={800}
       />
 
       <div className="absolute bottom-[10%] left-8 w-1/2 sm:w-1/3">

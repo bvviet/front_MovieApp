@@ -1,17 +1,21 @@
+import ImageComponent from "@components/ImageComponent";
+
 const SearchResultsPersons = ({ item }) => {
   return (
     <div
       key={item?.id}
       className="mb-5 flex gap-2 rounded-xl border border-slate-500 bg-slate-950 shadow-2xl sm:gap-4"
     >
-      <img
+      <ImageComponent
         src={
           item?.profile_path
             ? `https://image.tmdb.org/t/p/original${item?.profile_path}`
             : "/actorNoImage.svg"
         }
         alt="No Image"
-        className="w-[80px] sm:w-[120px] rounded-xl object-cover"
+        className="w-[80px] rounded-xl object-cover sm:w-[full]"
+        width={80}
+        height={120}
       />
 
       <div>
