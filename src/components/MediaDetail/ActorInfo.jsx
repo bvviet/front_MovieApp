@@ -1,6 +1,6 @@
 import ImageComponent from "@components/ImageComponent";
 
-const ActorInfo = ({ name, character, profilePath }) => {
+const ActorInfo = ({ name, character, profilePath, episodeCount }) => {
   return (
     <div className="rounded-lg border border-slate-300 bg-black shadow-sm">
       <ImageComponent
@@ -17,6 +17,13 @@ const ActorInfo = ({ name, character, profilePath }) => {
       <div className="p-1 sm:p-3">
         <p className="font-bold">{name}</p>
         <p>{character}</p>
+        {episodeCount && (
+          <p>
+            {episodeCount > 1
+              ? `${episodeCount} Episodes`
+              : `${episodeCount} Episode`}
+          </p>
+        )}
       </div>
     </div>
   );

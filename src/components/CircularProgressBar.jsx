@@ -8,7 +8,7 @@ const CircularProgressBar = ({
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percent / 100) * circumference;
   return (
-    <div className="absolute top-[-20px] sm:top-[-50px]">
+    <div>
       <svg width={`${size}vw`} height={`${size}vw`}>
         <circle
           r={`${radius}vw`}

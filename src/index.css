@@ -1,5 +1,5 @@
-/* @import "./assets/css/reset.css";
-@import "./assets/css/base.css"; */
+/* @import "./assets/css/reset.css"; */
+/* @import "./assets/css/base.css"; */
 
 @tailwind base;
 @tailwind components;
@@ -34,4 +34,38 @@
 
 body {
   font-family: "Netflix Sans";
+}
+
+/* Tùy chỉnh thanh cuộn dọc */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Tùy chỉnh thanh cuộn ngang */
+::-webkit-scrollbar-horizontal {
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-track-horizontal {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::-webkit-scrollbar-thumb-horizontal {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb-horizontal:hover {
+  background: #555;
 }

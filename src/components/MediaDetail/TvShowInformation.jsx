@@ -1,19 +1,18 @@
-import { currencyFormatter } from "@libs/utils";
-
-const Information = ({ movieInfo }) => {
+const TvShowInformation = ({ tvShowInfo = {} }) => {
   return (
     <div>
       <p className="text-[1.5vw] font-bold">Information</p>
       <div className="mt-2 flex flex-col gap-1 sm:gap-4">
         <div>
           <p className="font-bold">Original Title</p>
-          <p>{movieInfo?.original_title}</p>
+          <p>{tvShowInfo?.original_name}</p>
         </div>
         <div>
           <p className="font-bold">Origin Country</p>
           <div className="mt-1 flex gap-3">
-            {movieInfo?.origin_country.map((country) => (
+            {tvShowInfo?.origin_country.map((country) => (
               <img
+                className="w-5 sm:w-12"
                 key={country}
                 src={`https://flagcdn.com/32x24/${country.toLowerCase()}.png`}
               />
@@ -22,18 +21,22 @@ const Information = ({ movieInfo }) => {
         </div>
         <div>
           <p className="font-bold">Status</p>
-          <p>{movieInfo?.status}</p>
+          <p>{tvShowInfo?.status}</p>
         </div>
         <div>
-          <p className="font-bold">Budget</p>
-          <p>{currencyFormatter(movieInfo?.budget)}</p>
-        </div>
-        <div>
-          <p className="font-bold">Revenue</p>
-          <p>{currencyFormatter(movieInfo?.revenue)}</p>
+          <p className="font-bold">Network</p>
+          <p>
+            {tvShowInfo?.networks.map((network) => (
+              <img
+                className="mt-1 w-5 invert sm:w-16"
+                key={network.id}
+                src={`https://media.themoviedb.org/t/p/h30/${network.logo_path}`}
+              />
+            ))}
+          </p>
         </div>
       </div>
     </div>
   );
 };
-export default Information;
+export default TvShowInformation;

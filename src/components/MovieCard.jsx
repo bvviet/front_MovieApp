@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import CircularProgressBar from "./CircularProgressBar";
 import ImageComponent from "./ImageComponent";
+import CircularProgressBar from "./CircularProgressBar";
 
 const MovieCard = ({ data, media_type }) => {
   return (
@@ -10,7 +10,13 @@ const MovieCard = ({ data, media_type }) => {
           TV Show
         </p>
       )}
-      <Link to={`/detail/${media_type}/${data?.id || data.movieId}`}>
+      <Link
+        to={
+          media_type === "tv"
+            ? `/detail/tv/${data?.id || data.movieId}`
+            : `/detail/movie/${data?.id || data.movieId}`
+        }
+      >
         <ImageComponent
           className={`w-full rounded-lg`}
           src={`https://image.tmdb.org/t/p/original${data?.poster_path}`}
@@ -19,7 +25,7 @@ const MovieCard = ({ data, media_type }) => {
           height={300}
         />
       </Link>
-      <div className="relative top-[1.5vw] px-1 pb-3 sm:px-4 sm:pb-9">
+      <div className="relative -top-[1.5vw] px-1 pb-3 sm:px-4 sm:pb-9">
         <CircularProgressBar
           percent={Math.round(data.vote_average * 10)}
           strokeColor={
