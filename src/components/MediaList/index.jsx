@@ -13,6 +13,8 @@ const MediaList = ({ title, tabs }) => {
 
   const { data, isLoading } = useFetch({ url: urlTrending });
   const trenDings = data?.results || [];
+  console.log(data);
+
   setIsLoading(isLoading);
 
   return (

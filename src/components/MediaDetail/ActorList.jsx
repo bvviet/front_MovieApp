@@ -7,7 +7,7 @@ const ActorList = ({ actors = [] }) => {
   return (
     <div>
       <p className="text-[1.5vw] font-bold">Actors</p>
-      <div className="mt-2 sm:mt-4 grid grid-cols-3 gap-2 sm:gap-4 sm:grid-cols-4">
+      <div className="mt-2 grid grid-cols-3 gap-2 sm:mt-4 sm:grid-cols-4 sm:gap-4">
         {currentActor.map((actor) => (
           <ActorInfo
             key={actor.id}
@@ -15,6 +15,7 @@ const ActorList = ({ actors = [] }) => {
             name={actor.name}
             character={actor.character}
             profilePath={actor.profile_path}
+            episodeCount={actor.episodeCount}
           />
         ))}
       </div>

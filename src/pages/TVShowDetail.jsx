@@ -13,20 +13,20 @@ import ActorList from "@components/MediaDetail/ActorList";
 import RelatedMediaList from "@components/MediaDetail/RelatedMediaList";
 import useFetch from "@hooks/useFetch";
 import { FavoriteContext } from "@contexts/FavoriteContext";
-import MovieInformation from "@components/MediaDetail/MovieInformation";
+import TvShowInformation from "@components/MediaDetail/TvShowInformation";
+import SeaSonsList from "@components/MediaDetail/SeaSonsList";
 
-const DetailMovie = () => {
+const TVShowDetail = () => {
   const { user } = useUser();
-  let { movieId } = useParams();
+  let { tvShowId } = useParams();
   const { fetchFavorite } = useContext(FavoriteContext);
   const { setMessages } = useContext(MessagesContext);
   const { setIsLoading } = useContext(LoadingContext);
 
   // Get detail
-  const { data: movieDetail, isLoading } = useFetch({
-    url: `/movie/${movieId}?language=vi&append_to_response=release_dates,credits`,
+  const { data: TVShowDetail, isLoading } = useFetch({
+    url: `/tv/${tvShowId}?language=vi&append_to_response=content_ratings,aggregate_credits`,
   });
-  console.log(movieDetail);
 
   setIsLoading(isLoading);
 
@@ -42,12 +42,13 @@ const DetailMovie = () => {
       setIsLoading(true);
       const res = await axios.post("http://localhost:3000/movies", {
         userId: user.id,
-        movieId: movieId,
-        poster_path: movieDetail?.poster_path,
-        title: movieDetail?.title || movieDetail?.name,
-        release_date: movieDetail?.release_date || movieDetail?.first_air_date,
-        vote_average: movieDetail?.vote_average,
-        media_type: "movie",
+        movieId: tvShowId,
+        poster_path: TVShowDetail?.poster_path,
+        title: TVShowDetail?.title || TVShowDetail?.name,
+        release_date:
+          TVShowDetail?.release_date || TVShowDetail?.first_air_date,
+        vote_average: TVShowDetail?.vote_average,
+        media_type: "tv",
       });
       if (res.status === 200) {
         fetchFavorite();
@@ -76,24 +77,26 @@ const DetailMovie = () => {
   // Lấy danh sách bộ phim liên quan
   const { data: recommendationResponse, isLoading: isLoadingRelated } =
     useFetch({
-      url: `/movie/${movieId}/recommendations?language=vi`,
+      url: `/tv/${tvShowId}/recommendations?language=vi`,
     });
 
-  const relatedMovies = recommendationResponse?.results || [];
+  const relatedTvShow = recommendationResponse?.results || [];
 
-  const certification = (
-    (movieDetail?.release_dates?.results || []).find(
-      (result) => result.iso_3166_1 === "US",
-    )?.release_dates || []
-  ).find((releaseDate) => releaseDate.certification)?.certification;
+  const certification = (TVShowDetail?.content_ratings?.results || []).find(
+    (result) => result.iso_3166_1 === "US",
+  )?.rating;
 
-  const crews = (movieDetail?.credits?.crew || [])
-    .filter((crew) => ["Director", "Screenplay", "Writer"].includes(crew.job))
+  const crews = (TVShowDetail?.aggregate_credits?.crew || [])
+    .filter((crew) => {
+      const jobs = (crew.jobs || []).map((j) => j.job);
+      return ["Director", "Writer"].some((job) => jobs.find((j) => j === job));
+    })
     .map((crew) => ({
       id: crew.id,
-      job: crew.job,
+      job: crew.jobs[0].job,
       name: crew.name,
-    }));
+    }))
+    .slice(0, 10);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -103,31 +106,43 @@ const DetailMovie = () => {
       <ToastContainer />
       <LoadingComponent />
       <Banner
-        id={movieDetail?.id}
-        title={movieDetail?.title}
-        backdropPath={movieDetail?.backdrop_path}
-        posterPath={movieDetail?.poster_path}
-        voteAverage={movieDetail?.vote_average}
-        releaseDate={movieDetail?.release_date}
-        genres={movieDetail?.genres}
+        id={TVShowDetail?.id}
+        title={TVShowDetail?.name}
+        backdropPath={TVShowDetail?.backdrop_path}
+        posterPath={TVShowDetail?.poster_path}
+        voteAverage={TVShowDetail?.vote_average}
+        releaseDate={TVShowDetail?.first_air_date}
+        genres={TVShowDetail?.genres}
         certification={certification}
         crews={crews}
-        overview={movieDetail?.overview}
+        overview={TVShowDetail?.overview}
         handleAddFavorite={handleAddFavorite}
       />
       <div className="bg-black text-[1.2vw] text-white">
         <div className="mx-auto flex max-w-screen-xl gap-5 px-6 py-10 sm:gap-8">
           <div className="flex-[2]">
-            <ActorList actors={movieDetail?.credits?.cast || []} />
+            <ActorList
+              actors={(TVShowDetail?.aggregate_credits?.cast || []).map(
+                (cats) => ({
+                  ...cats,
+                  character: cats.roles[0]?.character,
+                  episodeCount: cats.roles[0]?.episode_count,
+                }),
+              )}
+            />
+            <SeaSonsList
+              seasons={(TVShowDetail?.seasons || []).reverse()}
+              seriesId={TVShowDetail?.id}
+            />
             <RelatedMediaList
-              mediaList={relatedMovies}
+              mediaList={relatedTvShow}
               isLoading={isLoadingRelated}
             />
           </div>
           <div className="flex-1">
-            <MovieInformation
-              movieInfo={movieDetail}
-              originalTitle={movieDetail?.original_title}
+            <TvShowInformation
+              tvShowInfo={TVShowDetail}
+              originalTitle={TVShowDetail?.original_title}
             />
           </div>
         </div>
@@ -135,4 +150,4 @@ const DetailMovie = () => {
     </div>
   );
 };
-export default DetailMovie;
+export default TVShowDetail;
