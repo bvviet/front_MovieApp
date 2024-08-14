@@ -1,9 +1,11 @@
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TrailerComponent from "../Trailer/Trailer";
 import ImageComponent from "@components/ImageComponent";
+import { useModalContext } from "@contexts/ModalContext";
+import { Link } from "react-router-dom";
 
-const Movie = ({ data }) => {
+const Movie = ({ data, trailerVideoKey }) => {
+  const { openPopup } = useModalContext();
   if (!data) {
     return <p>Loading...</p>;
   }
@@ -34,14 +36,27 @@ const Movie = ({ data }) => {
           </div>
 
           <div className="mt-4 flex">
-            <TrailerComponent movieId={data?.id}>
-              <button className="mr-2 rounded bg-white px-4 py-2 text-10 text-black lg:text-lg">
-                <FontAwesomeIcon icon={faPlay} /> Trailer
-              </button>
-            </TrailerComponent>
-            <button className="rounded bg-slate-300/50 px-4 py-2 text-10 text-black lg:text-lg">
-              Thông tin
+            <button
+              onClick={() => {
+                openPopup(
+                  <iframe
+                    title="Trailer"
+                    src={`https://www.youtube.com/embed/${trailerVideoKey}`}
+                    className="aspect-video w-[50vw]"
+                  />,
+                );
+              }}
+              className="mr-2 rounded bg-white px-4 py-2 text-10 text-black lg:text-lg"
+            >
+              <FontAwesomeIcon icon={faPlay} /> Trailer
             </button>
+
+            <Link
+              to={`detail/movie/${data?.id}`}
+              className="rounded bg-slate-300/50 px-4 py-2 text-10 text-black lg:text-lg"
+            >
+              Thông tin
+            </Link>
           </div>
         </div>
       </div>

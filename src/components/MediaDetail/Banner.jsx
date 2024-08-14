@@ -2,10 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CircularProgressBar from "../CircularProgressBar";
 import { groupBy } from "lodash";
 import { faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
-import TrailerComponent from "../Trailer/Trailer";
+// import TrailerComponent from "../Trailer/Trailer";
 import { FavoriteContext } from "@contexts/FavoriteContext";
 import { useContext } from "react";
 import ImageComponent from "@components/ImageComponent";
+import { useModalContext } from "@contexts/ModalContext";
 
 const Banner = ({
   id,
@@ -19,8 +20,11 @@ const Banner = ({
   certification,
   overview,
   handleAddFavorite,
+  trailerVideoKey,
 }) => {
   const { moviesFavorite } = useContext(FavoriteContext);
+
+  const { openPopup } = useModalContext();
 
   const groupedCrews = groupBy(crews, "job");
 
@@ -66,15 +70,26 @@ const Banner = ({
               />
               Rating
             </div>
-            <TrailerComponent movieId={id}>
-              <button className="flex items-center">
-                <FontAwesomeIcon
-                  icon={faPlay}
-                  className="mr-1 text-[10px] sm:text-[20px]"
-                />
-                Trailer
-              </button>
-            </TrailerComponent>
+
+            <button
+              onClick={() => {
+                openPopup(
+                  <iframe
+                    title="Trailer"
+                    src={`https://www.youtube.com/embed/${trailerVideoKey}`}
+                    className="aspect-video w-[50vw]"
+                  />,
+                );
+              }}
+              className="flex items-center"
+            >
+              <FontAwesomeIcon
+                icon={faPlay}
+                className="mr-1 text-[10px] sm:text-[20px]"
+              />
+              Trailer
+            </button>
+
             <div>
               <button onClick={handleAddFavorite}>
                 {moviesFavorite.some((movie) => movie.movieId == id) ? (

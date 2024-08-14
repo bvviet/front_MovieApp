@@ -15,7 +15,7 @@ const ButtonDelete = ({ idMovie, handleDeleteSuccess }) => {
     try {
       if (userId && idMovie) {
         const res = await fetch(
-          `http://localhost:3000/movies/favorites/${userId}/${idMovie}`,
+          `https://back-end-movie-app-bvv.vercel.app/movies/favorites/${userId}/${idMovie}`,
           {
             method: "DELETE",
           },
@@ -49,7 +49,7 @@ const ButtonDelete = ({ idMovie, handleDeleteSuccess }) => {
   return (
     <button
       onClick={handleDelete}
-      className="absolute z-10 bottom-2 right-[15px] sm:right-[-50px] cursor-pointer sm:mr-20"
+      className="absolute bottom-2 right-[15px] z-10 cursor-pointer sm:right-[-50px] sm:mr-20"
     >
       <FontAwesomeIcon icon={faTrash} />
     </button>

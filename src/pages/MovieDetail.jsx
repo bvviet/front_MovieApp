@@ -24,7 +24,7 @@ const DetailMovie = () => {
 
   // Get detail
   const { data: movieDetail, isLoading } = useFetch({
-    url: `/movie/${movieId}?language=vi&append_to_response=release_dates,credits`,
+    url: `/movie/${movieId}?append_to_response=release_dates,credits,videos`,
   });
   console.log(movieDetail);
 
@@ -40,15 +40,19 @@ const DetailMovie = () => {
     }
     try {
       setIsLoading(true);
-      const res = await axios.post("http://localhost:3000/movies", {
-        userId: user.id,
-        movieId: movieId,
-        poster_path: movieDetail?.poster_path,
-        title: movieDetail?.title || movieDetail?.name,
-        release_date: movieDetail?.release_date || movieDetail?.first_air_date,
-        vote_average: movieDetail?.vote_average,
-        media_type: "movie",
-      });
+      const res = await axios.post(
+        "https://back-end-movie-app-bvv.vercel.app/movies",
+        {
+          userId: user.id,
+          movieId: movieId,
+          poster_path: movieDetail?.poster_path,
+          title: movieDetail?.title || movieDetail?.name,
+          release_date:
+            movieDetail?.release_date || movieDetail?.first_air_date,
+          vote_average: movieDetail?.vote_average,
+          media_type: "movie",
+        },
+      );
       if (res.status === 200) {
         fetchFavorite();
         toast.success("Thêm thành công!", {
@@ -114,14 +118,20 @@ const DetailMovie = () => {
         crews={crews}
         overview={movieDetail?.overview}
         handleAddFavorite={handleAddFavorite}
+        trailerVideoKey={
+          (movieDetail?.videos?.results || []).find(
+            (video) => video.type === "Trailer",
+          )?.key
+        }
       />
       <div className="bg-black text-[1.2vw] text-white">
-        <div className="mx-auto flex max-w-screen-xl gap-5 px-6 py-10 sm:gap-8">
+        <div className="container">
           <div className="flex-[2]">
             <ActorList actors={movieDetail?.credits?.cast || []} />
             <RelatedMediaList
               mediaList={relatedMovies}
               isLoading={isLoadingRelated}
+              title="More like this"
             />
           </div>
           <div className="flex-1">

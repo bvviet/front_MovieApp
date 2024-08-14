@@ -7,8 +7,17 @@ const FeatureMovies = () => {
   const [activeMovieId, setActiveMovieId] = useState();
 
   const { data: popularMovies } = useFetch({
-    url: "/movie/popular?language=vi",
+    url: "/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
   });
+
+  const { data: MovieResponse } = useFetch(
+    {
+      url: `/movie/${activeMovieId}/videos`,
+    },
+    { enabled: !!activeMovieId },
+  );
+
+  console.log(MovieResponse);
 
   // Memoize giá trị của movies
   const movies = useMemo(
@@ -42,7 +51,15 @@ const FeatureMovies = () => {
       {movies
         .filter((movie) => movie.id === activeMovieId)
         .map((movie) => (
-          <Movie data={movie} key={movie.id} />
+          <Movie
+            data={movie}
+            key={movie.id}
+            trailerVideoKey={
+              (MovieResponse?.results || []).find(
+                (video) => video.type === "Trailer" && video.site === "YouTube",
+              )?.key
+            }
+          />
         ))}
 
       <PaginateIndicator
