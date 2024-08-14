@@ -25,7 +25,7 @@ const TVShowDetail = () => {
 
   // Get detail
   const { data: TVShowDetail, isLoading } = useFetch({
-    url: `/tv/${tvShowId}?language=vi&append_to_response=content_ratings,aggregate_credits`,
+    url: `/tv/${tvShowId}?append_to_response=content_ratings,aggregate_credits,videos`,
   });
 
   setIsLoading(isLoading);
@@ -40,16 +40,19 @@ const TVShowDetail = () => {
     }
     try {
       setIsLoading(true);
-      const res = await axios.post("http://localhost:3000/movies", {
-        userId: user.id,
-        movieId: tvShowId,
-        poster_path: TVShowDetail?.poster_path,
-        title: TVShowDetail?.title || TVShowDetail?.name,
-        release_date:
-          TVShowDetail?.release_date || TVShowDetail?.first_air_date,
-        vote_average: TVShowDetail?.vote_average,
-        media_type: "tv",
-      });
+      const res = await axios.post(
+        "https://back-end-movie-app-bvv.vercel.app/movies",
+        {
+          userId: user.id,
+          movieId: tvShowId,
+          poster_path: TVShowDetail?.poster_path,
+          title: TVShowDetail?.title || TVShowDetail?.name,
+          release_date:
+            TVShowDetail?.release_date || TVShowDetail?.first_air_date,
+          vote_average: TVShowDetail?.vote_average,
+          media_type: "tv",
+        },
+      );
       if (res.status === 200) {
         fetchFavorite();
         toast.success("Thêm thành công!", {
@@ -117,9 +120,14 @@ const TVShowDetail = () => {
         crews={crews}
         overview={TVShowDetail?.overview}
         handleAddFavorite={handleAddFavorite}
+        trailerVideoKey={
+          (TVShowDetail?.videos?.results || []).find(
+            (video) => video.type === "Trailer",
+          )?.key
+        }
       />
       <div className="bg-black text-[1.2vw] text-white">
-        <div className="mx-auto flex max-w-screen-xl gap-5 px-6 py-10 sm:gap-8">
+        <div className="container">
           <div className="flex-[2]">
             <ActorList
               actors={(TVShowDetail?.aggregate_credits?.cast || []).map(
@@ -137,6 +145,7 @@ const TVShowDetail = () => {
             <RelatedMediaList
               mediaList={relatedTvShow}
               isLoading={isLoadingRelated}
+              title="More like this"
             />
           </div>
           <div className="flex-1">

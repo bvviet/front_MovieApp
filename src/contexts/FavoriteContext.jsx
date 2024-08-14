@@ -11,7 +11,7 @@ const FavoriteProvider = ({ children }) => {
   const fetchFavorite = async () => {
     if (user) {
       const res = await axios.get(
-        `http://localhost:3000/movies/accountId/${user?.id}`,
+        `https://back-end-movie-app-bvv.vercel.app/movies/accountId/${user?.id}`,
       );
       setMoviesFavorite(res?.data?.favorites?.movies || []);
     }
